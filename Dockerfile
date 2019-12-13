@@ -5,6 +5,7 @@ WORKDIR /myapp
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 RUN bundle install
+RUN gem install google-api-client -v 0.9.20
 COPY . /myapp
 
 # Add a script to be executed every time the container starts.
