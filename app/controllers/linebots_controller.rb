@@ -2,7 +2,7 @@
 
 class LinebotsController < ApplicationController
   require 'line/bot'
-  require 'dotenv'
+  # require 'dotenv'
 
   # callbackアクションのCSRFトークン認証を無効
   protect_from_forgery except: [:callback]
@@ -19,22 +19,32 @@ class LinebotsController < ApplicationController
       case event
       when Line::Bot::Event::Message
         case event.type
-          puts '¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥'
-          puts event
-          puts evnet.type
-          puts event.type.class
-          puts '¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥'
         when Line::Bot::Event::MessageType::Text
+          # 正規表現で「〜』をパターンマッチしてkeywordへ格納
+          keyword = event.message['text'].match(/.*「(.+)」.*/)
+          # マッチングしたときのみ入力されたキーワードを使用
           if keyword.present?
-            message = {
+            seed2 = select_word
+            message = [{
               type: 'text',
-              text: event.message['text']
-            }
+              text: 'そのキーワードなかなかいいね〜'
+            }, {
+              type: 'text',
+              # keyword[1]：「」内の文言
+              text: "#{keyword[1]} × #{seed2} !!"
+            }]
+          # マッチングしなかった場合は元々の仕様と同じようにキーワードを2つ選択して返す
           else
-            message = {
+            seed1 = select_word
+            seed2 = select_word
+            seed2 = select_word while seed1 == seed2
+            message = [{
               type: 'text',
-              text: 'テキストを入力してください'
-            }
+              text: 'キーワード何にしようかな〜〜'
+            }, {
+              type: 'text',
+              text: "#{seed1} × #{seed2} !!"
+            }]
           end
           client.reply_message(event['replyToken'], message)
         end
