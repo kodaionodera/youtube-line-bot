@@ -18,8 +18,10 @@ class LinebotsController < ApplicationController
     events.each do |event|
       case event
       when Line::Bot::Event::Message
+        puts event.type.class
         case event.type
         when Line::Bot::Event::MessageType::Text
+          puts 11_111_111_111_111_111_111_111_111_111_111
           # 正規表現で「〜』をパターンマッチしてkeywordへ格納
           keyword = event.message['text'].match(/.*「(.+)」.*/)
           # マッチングしたときのみ入力されたキーワードを使用
@@ -35,6 +37,7 @@ class LinebotsController < ApplicationController
             }]
           # マッチングしなかった場合は元々の仕様と同じようにキーワードを2つ選択して返す
           else
+            puts 222_222_222_222_222_222_222_222_222_222_222
             seed1 = select_word
             seed2 = select_word
             seed2 = select_word while seed1 == seed2
