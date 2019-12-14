@@ -10,50 +10,29 @@ class LinebotsController < ApplicationController
   # TODO: bolumeできてない
   def callback
     body = request.body.read
+
     signature = request.env['HTTP_X_LINE_SIGNATURE']
     unless client.validate_signature(body, signature)
-      error 400 do 'Bad Request' end
+      halt 400, { 'Content-Type' => 'text/plain' }, 'Bad Request'
     end
+
     events = client.parse_events_from(body)
+
     events.each do |event|
       case event
       when Line::Bot::Event::Message
-        puts event.type.class
         case event.type
         when Line::Bot::Event::MessageType::Text
-          puts 11_111_111_111_111_111_111_111_111_111_111
-          # 正規表現で「〜』をパターンマッチしてkeywordへ格納
-          keyword = event.message['text'].match(/.*「(.+)」.*/)
-          # マッチングしたときのみ入力されたキーワードを使用
-          if keyword.present?
-            seed2 = select_word
-            message = [{
-              type: 'text',
-              text: 'そのキーワードなかなかいいね〜'
-            }, {
-              type: 'text',
-              # keyword[1]：「」内の文言
-              text: "#{keyword[1]} × #{seed2} !!"
-            }]
-          # マッチングしなかった場合は元々の仕様と同じようにキーワードを2つ選択して返す
-          else
-            puts 222_222_222_222_222_222_222_222_222_222_222
-            seed1 = select_word
-            seed2 = select_word
-            seed2 = select_word while seed1 == seed2
-            message = [{
-              type: 'text',
-              text: 'キーワード何にしようかな〜〜'
-            }, {
-              type: 'text',
-              text: "#{seed1} × #{seed2} !!"
-            }]
-          end
+          message = {
+            type: 'text',
+            text: event.message['text']
+          }
           client.reply_message(event['replyToken'], message)
         end
       end
     end
-    head :ok
+
+    'OK'
   end
 
   private
