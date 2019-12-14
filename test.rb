@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 require 'google/apis/youtube_v3'
 require 'active_support/all'
 require 'dotenv'
 # デバッグ用
 require 'pry'
 
-Dotenv.load ".env"
+Dotenv.load '.env'
 
-GOOGLE_API_KEY=ENV['API_KEY'] #上記で作成したキー
-def find_videos(keyword, after: 9.months.ago, before: Time.now) #検索キーワードと検索範囲を変えれるように引数に値を取っています
+GOOGLE_API_KEY = ENV['API_KEY'] # 上記で作成したキー
+def find_videos(keyword, after: 9.months.ago, before: Time.now) # 検索キーワードと検索範囲を変えれるように引数に値を取っています
   service = Google::Apis::YoutubeV3::YouTubeService.new
   service.key = GOOGLE_API_KEY
   next_page_token = nil

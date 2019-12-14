@@ -1,11 +1,11 @@
+# frozen_string_literal: true
+
 require 'dotenv'
 require 'google/apis/youtube_v3'
 require 'active_support/all'
 
 class YoutubesController < ApplicationController
-
-  def find_videos(keyword, after: 9.months.ago, before: Time.now) #検索キーワードと検索範囲を変えれるように引数に値を取っています
-
+  def find_videos(keyword, after: 9.months.ago, before: Time.now) # 検索キーワードと検索範囲を変えれるように引数に値を取っています
     # Dotenv.load ".env"
     # GOOGLE_API_KEY=ENV['API_KEY']
 
