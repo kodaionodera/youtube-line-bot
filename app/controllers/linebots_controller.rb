@@ -22,6 +22,11 @@ class LinebotsController < ApplicationController
       case event
       when Line::Bot::Event::Message
         case event.type
+        puts '|||||||||||||||||||||||||||||||||||||||'
+        puts event.type
+        puts event.class
+        puts event.type.class
+        puts '|||||||||||||||||||||||||||||||||||||||'
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
