@@ -1,6 +1,8 @@
 require 'google/apis/youtube_v3'
 require 'active_support/all'
 require 'dotenv'
+# デバッグ用
+require 'pry'
 
 Dotenv.load ".env"
 
@@ -22,8 +24,10 @@ def find_videos(keyword, after: 9.months.ago, before: Time.now) #検索キーワ
   results.items.each do |item|
     id = item.id
     snippet = item.snippet
-    puts "\"#{snippet.title}\" by #{snippet.channel_title} (id: #{id.video_id}) (#{snippet.published_at})"
+    binding.pry
+    puts snippet
+    # puts "\"#{snippet.title}\" by #{snippet.channel_title} (id: #{id.video_id}) (#{snippet.published_at})"
   end
 end
 
-find_videos('明日香ちゃんねる')
+find_videos('ガードマンチャンネル')

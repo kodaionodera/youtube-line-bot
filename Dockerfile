@@ -2,10 +2,11 @@ FROM ruby:2.5
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 RUN mkdir /myapp
 WORKDIR /myapp
+# 文字化けしないように
+ENV LANG=C.UTF-8
 COPY Gemfile /myapp/Gemfile
 COPY Gemfile.lock /myapp/Gemfile.lock
 RUN bundle install
-RUN gem install google-api-client -v 0.9.20
 COPY . /myapp
 
 # Add a script to be executed every time the container starts.

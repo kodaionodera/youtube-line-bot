@@ -1,4 +1,5 @@
 version: '3'
+# buildし直すのがめんどいので
 volumes:
   bundle:
 services:
