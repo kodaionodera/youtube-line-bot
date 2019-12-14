@@ -19,11 +19,11 @@ class LinebotsController < ApplicationController
       case event
       when Line::Bot::Event::Message
         case event.type
-          pp '¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥'
-          pp event
-          pp evnet.type
-          pp event.type.class
-          pp '¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥'
+          puts '¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥'
+          puts event
+          puts evnet.type
+          puts event.type.class
+          puts '¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥'
         when Line::Bot::Event::MessageType::Text
           if keyword.present?
             message = {
