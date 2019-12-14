@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # <% @youtube_data.items.each do |item| %>
 #   <% snippet = item.snippet %>
 #   <p><%= snippet.title %></p>

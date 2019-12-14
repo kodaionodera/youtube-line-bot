@@ -35,16 +35,10 @@ class LinebotsController < ApplicationController
             }]
           # マッチングしなかった場合は元々の仕様と同じようにキーワードを2つ選択して返す
           else
-            seed1 = select_word
-            seed2 = select_word
-            seed2 = select_word while seed1 == seed2
-            message = [{
+            message = {
               type: 'text',
-              text: 'キーワード何にしようかな〜〜'
-            }, {
-              type: 'text',
-              text: "#{seed1} × #{seed2} !!"
-            }]
+              text: 'テキストを入力してください'
+            }
           end
           client.reply_message(event['replyToken'], message)
         end
