@@ -22,11 +22,6 @@ class LinebotsController < ApplicationController
       case event
       when Line::Bot::Event::Message
         case event.type
-        puts '|||||||||||||||||||||||||||||||||||||||'
-        puts event.type
-        puts event.class
-        puts event.type.class
-        puts '|||||||||||||||||||||||||||||||||||||||'
         when Line::Bot::Event::MessageType::Text
           message = {
             type: 'text',
@@ -47,11 +42,5 @@ class LinebotsController < ApplicationController
       config.channel_secret = ENV['LINE_CHANNEL_SECRET']
       config.channel_token = ENV['LINE_CHANNEL_TOKEN']
     end
-  end
-
-  def select_word
-    # この中を変えると返ってくるキーワードが変わる
-    seeds = %w[アイデア１ アイデア２ アイデア３ アイデア４]
-    seeds.sample
   end
 end
