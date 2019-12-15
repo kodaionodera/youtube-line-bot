@@ -6,15 +6,11 @@ class LinebotsController < ApplicationController
   # youtube用
   require 'google/apis/youtube_v3'
   require 'active_support/all'
-  require 'dotenv'
-
-  Dotenv.load '.env'
 
   # callbackアクションのCSRFトークン認証を無効
   protect_from_forgery except: [:callback]
 
   def callback
-
     body = request.body.read
     signature = request.env['HTTP_X_LINE_SIGNATURE']
 
