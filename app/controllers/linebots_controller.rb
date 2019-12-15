@@ -27,9 +27,20 @@ class LinebotsController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           item_ids = find_videos(event.message['text'])
+          start_word = {
+            type: 'text',
+            text: "「#{event.message['text']}」という検索ワードにヒットした動画#{item_ids.count}が件ありました！"
+          }
           message = item_ids.map do |id|
-            { type: 'text', text: "https://www.youtube.com/embed/#{id.video_id}" }
+            {
+              type: 'text',
+              text: "https://www.youtube.com/embed/#{id.video_id}"
+            }
           end
+
+          # 破壊的
+          message.unshift(start_word)
+
         # TODO　全部elseでいいかも
         when Line::Bot::Event::MessageType::Image
           message = {
