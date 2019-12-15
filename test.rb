@@ -26,10 +26,8 @@ def find_videos(keyword, after: 9.months.ago, before: Time.now) # 検索キー�
   results.items.each do |item|
     id = item.id
     snippet = item.snippet
-    binding.pry
-    puts snippet
-    # puts "\"#{snippet.title}\" by #{snippet.channel_title} (id: #{id.video_id}) (#{snippet.published_at})"
+    puts "\"#{snippet.title}\" by #{snippet.channel_title} (id: #{id.video_id}) (#{snippet.published_at})"
   end
 end
 
-find_videos('ガードマンチャンネル')
+find_videos('ガードマン')
