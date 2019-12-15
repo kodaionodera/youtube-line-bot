@@ -29,7 +29,7 @@ class LinebotsController < ApplicationController
           item_ids = find_videos(event.message['text'])
           start_word = {
             type: 'text',
-            text: "「#{event.message['text']}」という検索ワードにヒットした動画#{item_ids.count}が件ありました！"
+            text: message_first_text(item_ids)
           }
           message = item_ids.map do |id|
             {
@@ -38,20 +38,23 @@ class LinebotsController < ApplicationController
             }
           end
 
-          # 破壊的
+          # 破壊的変更
           message.unshift(start_word)
 
         # TODO　全部elseでいいかも
+        # 画像のケース
         when Line::Bot::Event::MessageType::Image
           message = {
             type: 'text',
             text: '画像は送れません'
           }
+        # スタンプのケース
         when Line::Bot::Event::MessageType::Sticker
           message = {
             type: 'text',
             text: 'スタンプは対応していません'
           }
+        # その他のケース
         else
           message = {
             type: 'text',
@@ -68,7 +71,8 @@ class LinebotsController < ApplicationController
   private
 
   # 今は一番最新のものを取っている
-  # 検索キーワードと検索範囲を変えれるように引数に値を取っています
+  # 検索キーワードと検索範囲を変えれるように引数に値セット
+  # TODO デフォルト引数の設定
   def find_videos(keyword, after: 9.months.ago, before: Time.now)
     service = Google::Apis::YoutubeV3::YouTubeService.new
     service.key = ENV['API_KEY']
@@ -86,6 +90,15 @@ class LinebotsController < ApplicationController
 
     # 動画のidを配列で返却
     results.items.map(&:id)
+  end
+
+  # ヒットしたものがあるかないかでメッセージを変更する
+  def message_first_text(item_ids)
+    unless item_ids
+      "「#{event.message['text']}」という検索ワードにヒットした動画は見つかりませんでした"
+    else
+      "「#{event.message['text']}」という検索ワードにヒットした動画が#{item_ids.count}件ありました！"
+    end
   end
 
   # 呼ばれる度にインスタンスを生成しないようにメモ化
