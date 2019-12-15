@@ -94,7 +94,7 @@ class LinebotsController < ApplicationController
 
   # ヒットしたものがあるかないかでメッセージを変更する
   def message_first_text(item_ids, event)
-    unless item_ids
+    if item_ids.blank?
       "「#{event.message['text']}」という検索ワードにヒットした動画は見つかりませんでした"
     else
       "「#{event.message['text']}」という検索ワードにヒットした動画が#{item_ids.count}件ありました！"
