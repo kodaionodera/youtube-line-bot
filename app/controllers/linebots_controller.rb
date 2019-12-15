@@ -29,7 +29,7 @@ class LinebotsController < ApplicationController
           item_ids = find_videos(event.message['text'])
           start_word = {
             type: 'text',
-            text: message_first_text(item_ids)
+            text: message_first_text(item_ids, event)
           }
           message = item_ids.map do |id|
             {
@@ -93,7 +93,7 @@ class LinebotsController < ApplicationController
   end
 
   # ヒットしたものがあるかないかでメッセージを変更する
-  def message_first_text(item_ids)
+  def message_first_text(item_ids, event)
     unless item_ids
       "「#{event.message['text']}」という検索ワードにヒットした動画は見つかりませんでした"
     else
