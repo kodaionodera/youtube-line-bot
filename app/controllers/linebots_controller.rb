@@ -73,18 +73,16 @@ class LinebotsController < ApplicationController
   # 今は一番最新のものを取っている
   # 検索キーワードと検索範囲を変えれるように引数に値セット
   # TODO デフォルト引数の設定
-  def find_videos(keyword, after: 9.months.ago, before: Time.now)
+  def find_videos(keyword)
     service = Google::Apis::YoutubeV3::YouTubeService.new
     service.key = ENV['API_KEY']
-    next_page_token = nil
     opt = {
       q: keyword,
       type: 'video',
-      max_results: 2,
-      order: :date,
-      page_token: next_page_token,
-      published_after: after.iso8601,
-      published_before: before.iso8601
+      max_results: 5,
+      order: :date
+      # published_after: after.iso8601,
+      # published_before: before.iso8601
     }
     results = service.list_searches(:snippet, opt)
 
