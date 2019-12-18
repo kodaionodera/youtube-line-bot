@@ -79,8 +79,9 @@ class LinebotsController < ApplicationController
     opt = {
       q: keyword,
       type: 'video',
-      max_results: 5
+      max_results: 4 #なぜか5以上は無理
       # order: :date
+      # page_token: next_page_token,
       # published_after: after.iso8601,
       # published_before: before.iso8601
     }
