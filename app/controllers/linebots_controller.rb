@@ -80,7 +80,7 @@ class LinebotsController < ApplicationController
       q: keyword,
       type: 'video',
       max_results: 5,
-      order: :date
+      # order: :date
       # published_after: after.iso8601,
       # published_before: before.iso8601
     }
